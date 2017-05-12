@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="dao.EmployeeMapper">
+
+	<resultMap type="Employee" id="EmployeeResult">
+		<id 	property="eno" 		column="eno"/>
+		<result property="ename" 	column="ename"/>
+		<result property="salary" 	column="salary"/>
+		<result property="gender" 	column="gender"/>
+		<result property="joinDate" column="joinDate"/>
+		<association property="department" 	resultMap="dao.DepartmentMapper.DepartmentResult"/>
+		<association property="title"		resultMap="dao.TitleMapper.TitleResult"/>
+	</resultMap>
+	 
+	<!-- Select SQL -->
+    <sql id="selectSQL">
+		SELECT eno, ename, salary, gender, joinDate, 
+				d.dcode, d.dname, d.floor,
+				tcode, t.tcode, t.tname  
+			FROM employee e
+			JOIN department d ON e.dno = d.dcode
+			JOIN title t ON e.title = t.tcode
+	</sql>
+
+	<!-- Where SQL -->
+	<sql id="whereSQL">
+		<where>
+			<if test="eno != null">	
+				WHERE eno = #{eno};
+			</if>
+		</where>
+	</sql>
+	    
+	<!-- Select By All --> 
+	<select id="selectEmployeeByAll" resultMap="EmployeeResult">
+		<include refid="selectSQL" />
+	</select>
+    
+	<!-- Select By No --> 
+	<select id="selectEmployeeByNo" resultMap="EmployeeResult">
+		<include refid="selectSQL" />
+		<include refid="whereSQL"/>
+	</select>
+    
+	<!-- Insert Item -->
+	<insert id="insertEmployeeItem" parameterType="Employee">
+		INSERT INTO employee VALUES (
+			#{eno}, #{ename}, #{salary}, #{dno}, #{gender}, #{joinDate}, #{title}
+		);
+	</insert>
+    
+	<!-- Update Item -->
+	<update id="updateEmployeeItem" parameterType="Employee">
+		UPDATE employee	SET 
+			<if test="eno = null"> eno=#{eno}, </if> 
+			<if test="ename = null"> ename=#{ename}, </if>
+			salary=#{salary}, 
+			dno=#{dno}, 
+			gender=#{gender}, 
+			joinDate=#{joinDate}, 
+			title=#{title}
+		<include refid="whereSQL"/>
+	</update>
+     
+	<!-- Delete item -->
+	<delete id="deleteEmployeeItem" parameterType="Employee">
+		DELETE FROM employee 
+		<include refid="whereSQL"/>
+	</delete>
+     
+</mapper>
+

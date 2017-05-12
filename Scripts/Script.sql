@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS ncs_erp_02;
 CREATE DATABASE ncs_erp_02;
 USE ncs_erp_02;
 
+-- CRATE TABLE --
 CREATE TABLE IF NOT EXISTS title(	
 	tcode    INT(11)     NOT NULL,
 	tname    VARCHAR(10),
@@ -27,6 +28,7 @@ CREATE TABLE IF NOT EXISTS employee (
 	FOREIGN KEY (dno) 	REFERENCES department(dcode)
 );
 
+-- INSERT SAMPLE VALUSE --
 INSERT INTO title VALUES
 	(1,"사장"),
 	(2,"부장"),
@@ -55,7 +57,30 @@ INSERT INTO employee VALUES
 	(17010,"너사원",2500000,2,1,"2017-03-01",5),
 	(17011,"이사원",2000000,3,0,"2017-03-01",5);
 
+	
+-- TEST CRUD --
+-- eno ename salary dno gender joinDate title 
+	
 SHOW tables;
 SELECT * FROM employee;
 SELECT * FROM title;
 SELECT * FROM department;
+
+SELECT eno, ename, salary, gender, joinDate, tcode, t.tcode, t.tname, d.dcode, d.dname, d.floor FROM employee e
+	JOIN title t ON e.title = t.tcode
+	JOIN department d ON e.dno = d.dcode;
+
+INSERT INTO employee VALUES (17012,"TEST",0,5,1,"2017-03-01",1);
+
+UPDATE employee SET 
+	eno      = 17013,
+	ename    = "TEST2",
+	salary   = 999999,
+	dno      = 5,
+	gender 	 = 1,
+	joinDate = "2017-03-01",
+	title  	 = 1
+WHERE eno = 17012;
+
+DELETE FROM employee WHERE eno = 17013;  
+	

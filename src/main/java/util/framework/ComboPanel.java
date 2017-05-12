@@ -1,4 +1,4 @@
-package framework;
+package util.framework;
 
 import javax.swing.JComboBox;
 import java.awt.GridLayout;

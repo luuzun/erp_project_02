@@ -1,4 +1,4 @@
-package app.employee;
+package application.employee;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;

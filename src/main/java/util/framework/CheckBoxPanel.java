@@ -1,4 +1,4 @@
-package framework;
+package util.framework;
 
 import java.awt.Component;
 import java.awt.GridLayout;

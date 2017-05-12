@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="dao.DepartmentMapper">
+	
+	<resultMap type="Department" id="DepartmentResult">
+		<id 	property="dcode" 	column="dcode"/>
+		<result property="dname" 	column="dname"/>
+		<result property="floor" 	column="floor"/>
+	</resultMap>
+	
+	<!-- Select SQL -->
+    <sql id="selectSQL">
+		SELECT * FROM department
+	</sql>
+
+	<!-- Where SQL -->
+	<sql id="whereSQL">
+		<where>
+			<if test="dcode != null">	
+				WHERE dcode = #{dcode};
+			</if>
+		</where>
+	</sql>
+	    
+	<!-- Select By All --> 
+	<select id="selectDepartmentByAll" resultMap="DepartmentResult">
+		<include refid="selectSQL" />
+	</select>
+    
+	<!-- Select By No --> 
+	<select id="selectDepartmentByNo" resultMap="DepartmentResult">
+		<include refid="selectSQL" />
+		<include refid="whereSQL"/>
+	</select>
+    
+	<!-- Insert Item -->
+	<insert id="insertDepartmentItem" parameterType="Department">
+		INSERT INTO department VALUES (
+			#{dcode}, #{dname}, #{floor}
+		);
+	</insert>
+    
+	<!-- Update Item -->
+	<update id="updateDepartmentItem" parameterType="Department">
+		UPDATE department SET 
+			<if test="dcode = null"> dcode=#{dcode}, </if>
+			<if test="dname = null"> dname=#{dname}, </if>
+			floor=#{floor}
+		<include refid="whereSQL"/>
+	</update>
+     
+	<!-- Delete item -->
+	<delete id="deleteDepartmentItem" parameterType="Department">
+		DELETE FROM department 
+		<include refid="whereSQL"/>
+	</delete>
+</mapper>

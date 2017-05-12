@@ -1,4 +1,4 @@
-package framework;
+package util.framework;
 
 import java.awt.Color;
 import java.awt.GridLayout;

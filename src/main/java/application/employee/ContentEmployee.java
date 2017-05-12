@@ -1,12 +1,14 @@
-package app.employee;
+package application.employee;
 
 import javax.swing.JPanel;
+
+import util.framework.ComboPanel;
+import util.framework.RadioPanel;
+import util.framework.SpinnerPanel;
+import util.framework.TextFieldFormatPanel;
+import util.framework.TextFieldPanel;
+
 import java.awt.GridLayout;
-import framework.TextFieldPanel;
-import framework.ComboPanel;
-import framework.SpinnerPanel;
-import framework.RadioPanel;
-import framework.TextFieldFormatPanel;
 
 public class ContentEmployee extends JPanel {
 	private TextFieldPanel empNo;

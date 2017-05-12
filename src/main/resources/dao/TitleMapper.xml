@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="dao.TitleMapper">
+	
+	<resultMap type="Title" id="TitleResult">
+		<id 	property="tcode" 	column="tcode"/>
+		<result property="tname" 	column="tname"/>
+	</resultMap>
+	 
+	<!-- Select SQL -->
+    <sql id="selectSQL">
+		SELECT * FROM title
+	</sql>
+
+	<!-- Where SQL -->
+	<sql id="whereSQL">
+		<where>
+			<if test="tcode != null">	
+				WHERE tcode = #{tcode};
+			</if>
+		</where>
+	</sql>
+	    
+	<!-- Select By All --> 
+	<select id="selectTitleByAll" resultMap="TitleResult">
+		<include refid="selectSQL" />
+	</select>
+    
+	<!-- Select By No --> 
+	<select id="selectTitleByNo" resultMap="TitleResult">
+		<include refid="selectSQL" />
+		<include refid="whereSQL"/>
+	</select>
+    
+	<!-- Insert Item -->
+	<insert id="insertTitleItem" parameterType="Title">
+		INSERT INTO title VALUES (
+			#{tcode}, #{tname}
+		);
+	</insert>
+    
+	<!-- Update Item -->
+	<update id="updateTitleItem" parameterType="Title">
+		UPDATE title SET 
+			<if test="tcode = null"> tcode=#{tcode}, </if>  
+			tname=#{tname}
+		<include refid="whereSQL"/>
+	</update>
+     
+	<!-- Delete item -->
+	<delete id="deleteTitleItem" parameterType="Title">
+		DELETE FROM title 
+		<include refid="whereSQL"/>
+	</delete>
+</mapper>

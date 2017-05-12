@@ -1,4 +1,4 @@
-package app.employee;
+package application.employee;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -14,6 +14,7 @@ import dto.Employee;
 
 public class TableEmployee extends JPanel {
 	private JTable table;
+	private List<Employee> list;
 
 	public TableEmployee() {
 		setLayout(new BorderLayout(0, 0));
@@ -33,15 +34,8 @@ public class TableEmployee extends JPanel {
 		return new String[]{"판매코드","고객상호명","품목명","판매가격","주문갯수","총액","주문일자","입금여부"};
 	}
 
-	private Object[][] getRowDate() { //테이블 로우값입력 isExist가 true인 항목에대해서만 값받아옴
-		List<Employee> listForTable = new ArrayList<>();
-			
-		for (int i = listForTable.size()-1; i >= 0; i--) {
-			if (!listForTable.get(i).getSale().isSaleIsExist()) {
-				listForTable.remove(i);
-			}
-		}
-	
+	private Object[][] getRowDate() { 
+		List<Employee> listForTable = new ArrayList<Employee>(list);
 		
 		Object[][] datas = new Object[listForTable.size()][];
 		for (int i = 0; i < datas.length; i++) {
@@ -51,4 +45,15 @@ public class TableEmployee extends JPanel {
 	}
 
 	/*****************************************************************/
+	public JTable getTable() {
+		return table;
+	}
+	
+	public void setList(List<Employee> list) {
+		this.list = list;
+	}
+
+	public List<Employee> getList(){
+		return list;
+	}
 }

@@ -1,4 +1,4 @@
-package framework;
+package util.framework;
 
 import javax.swing.JPanel;
 import java.awt.GridLayout;
